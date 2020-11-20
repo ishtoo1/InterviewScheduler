@@ -1,0 +1,36 @@
+CREATE DATABASE IF NOT EXISTS InterviewBit;
+USE InterviewBit;
+
+CREATE TABLE IF NOT EXISTS Participant
+(
+  emailId VARCHAR(50) NOT NULL,
+  participantName VARCHAR(50) NOT NULL,
+  PRIMARY KEY (emailId)
+);
+
+CREATE TABLE IF NOT EXISTS Interview
+(
+  interviewId VARCHAR(10) NOT NULL,
+  interviewName VARCHAR(50) NOT NULL,
+  startTime TIMESTAMP NOT NULL,
+  endTime TIMESTAMP NOT NULL,
+  PRIMARY KEY (interviewId)
+);
+
+CREATE TABLE IF NOT EXISTS ParticipantInterviewRelation
+(
+  emailId VARCHAR(50) NOT NULL,
+  interviewId VARCHAR(10) NOT NULL,
+  PRIMARY KEY (emailId, interviewId),
+  FOREIGN KEY (emailId) REFERENCES Participant(emailId) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (interviewId) REFERENCES Interview(interviewId) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS ResumeFile
+(
+  fileId INT NOT NULL AUTO_INCREMENT,
+  emailId VARCHAR(50) NOT NULL,
+  filePath VARCHAR(100) NOT NULL,
+  PRIMARY KEY (fileId),
+  FOREIGN KEY (emailId) REFERENCES Participant(emailId) ON DELETE CASCADE ON UPDATE CASCADE
+);
